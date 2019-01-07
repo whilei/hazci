@@ -10,7 +10,7 @@ install:
 
   - ps: $env:VERSION = "$(git describe --tags)" # eg. v1.2.3-14-abcd123
   - ps: $env:VERSION_SEMVER_BASIC = "$(git describe --tags $(git rev-list --tags --max-count=1))" # eg. v1.2.3
-  - ps: $env:VERSION_BASE_DIST = "$(echo $env:VERSION_SEMVER_BASIC | sed 's/\(^v[0-9]*\.[0-9]*\.\)[0-9]*/\1/')" # eg. v1.2. (will append 'x' at deploy path)
+  - ps: $env:VERSION_BASE_DIST = "$(sed 's/\(^v[0-9]*\.[0-9]*\.\)[0-9]*/\1/' <<< $env:VERSION_SEMVER_BASIC)" # eg. v1.2. (will append 'x' at deploy path)
 
   - cd c:\hazci
 
@@ -27,10 +27,8 @@ install:
 build_script:
   - 7z a readme.zip README.md
 before_deploy:
-  - certUtil -hashfile readme.zip SHA256 > readme-%VERSION%.zip.sha256
-  - ps: >- 
-      $sha256 = (Get-Content readme-$env:VERSION.zip.sha256)
-      Write-Host -ForegroundColor Yellow -Message "sha256(readme-$env:VERSION.zip.sha256) = $sha256"
+  - ps: Get-FileHash readme.zip -Algorithm SHA256
+  - ps: Get-FileHash readme.zip | Out-File readme.zip.sha256
 deploy_script:
   - ps: $env:ARTIFACTORY_URL = "little"
   - ps: $env:ARTIFACTORY_USER = "white"
