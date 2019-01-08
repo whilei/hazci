@@ -37,6 +37,5 @@ deploy_script:
   - ps: >-
       If (($env:APPVEYOR_REPO_NAME -eq 'whilei/hazci') -and (($env:APPVEYOR_REPO_BRANCH -eq 'master') -or ($env:APPVEYOR_REPO_TAG -eq 'true'))) {
         .\jfrog.exe --help
-        echo $env:ARTIFACTORY_URL
-        echo "$env:ARTIFACTORY_URL/$env:VERSION_BASE_DISTx/"
+        echo "$env:ARTIFACTORY_URL/$env:VERSION_BASE_DIST`x/"
       }
