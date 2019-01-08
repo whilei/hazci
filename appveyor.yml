@@ -38,7 +38,7 @@ deploy_script:
   - ps: >-
       If (($env:APPVEYOR_REPO_NAME -eq 'whilei/hazci') -and (($env:APPVEYOR_REPO_BRANCH -eq 'master') -or ($env:APPVEYOR_REPO_TAG -eq 'true'))) {
         .\jfrog.exe --help
-        echo "some/where/$env:VERSION_BASE_DISTx/"
-        jfrog.exe config --url $env:ARTIFACTORY_URL --user $env:ARTIFACTORY_USER --apikey $env:ARTIFACTORY_APIKEY --interactive=false
-        jfrog.exe rt upload "readme-*" "some/where/$env:VERSION_BASE_DISTx/"
+        echo "somewh/ere/$env:VERSION_SEMVER_BASIC/"
+        echo "somewhere/$env:VERSION_SEMVER_BASICx/"
+        echo "some/where/$env:VERSION_BASE_DIST\x/"
       }
