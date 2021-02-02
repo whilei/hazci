@@ -36,4 +36,7 @@ jobs:
           echo test, and deploy your project.
           
       - name: Random words
-        run: shuf -n1  /usr/share/dict/american-english
+        run: |
+          test -d /usr/share/dict/ && ls -lshart /usr/share/dict/
+          test -d /usr/share/dictd/ && ls -lshart /usr/share/dictd/
+          ls -lshart /usr/share/dict*
